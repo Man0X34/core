@@ -1,0 +1,22 @@
+databases:
+  - name: coredb
+    plan: free
+    databaseName: coredb_nskk
+    user: coredb_nskk_user
+
+services:
+  - type: web
+    plan: free
+    name: core
+    runtime: python
+    buildCommand: './build.sh'
+    startCommand: 'python -m gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker' 
+    envVars:
+      - key: postgresql://coredb_nskk_user:20x2oOOqCnyMK6jP5avAiv4L7ZTbtLoy@dpg-d0ne4dh5pdvs738lgev0-a/coredb_nskk
+        fromDatabase:
+          name: coredb
+          property: connectionString
+      - key: django-insecure-j0j&8a)@=3#8#aruynr(g^1*f+^xakv1t*&0(+vfqv5+dma2iy
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
